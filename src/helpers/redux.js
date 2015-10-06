@@ -4,19 +4,6 @@ export function createReducer(actions, initialState = {}) {
 
     if (!reducer) return state;
 
-    return { ...state, ...reduced }
-  }
+    return { ...state, ...reducer(state, action) };
+  };
 }
-
-export const createActions = R.reduce((processedActions, actionDescription, actionName) => {
-  if (!Array.isArray(actionDescription)) return R.is(Function, actionDescription)
-    ? R.assoc(actionName, actionDescription, processedActions)
-    : processedActions;
-
-  return R.assoc(actionName, (state, action) => {
-    return R.zipObj(
-        actionDescription,
-        R.values(R.pick(actionDescription, action))
-    );
-  }, processedActions);
-}, {});

@@ -1,2 +1,2 @@
 export * from './redux';
-export * from './fetch';
+export * from './ajax';

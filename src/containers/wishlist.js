@@ -1,19 +1,35 @@
 import { connect } from 'react-redux';
 
-import { WishlistHeader } from '../components';
+import { WishlistHeader, WishlistItems } from '../components';
+import { wishlistItemsReceived, toggleWishlistItems } from '../actions';
 
 export class Wishlist extends React.Component {
+  componentWillReceiveProps(nextProps) {
+    let { data } = nextProps;
+
+    if (data && this.props.data != data) this.props.onItemsReceive(data.wishlistItems);
+  }
+
   render() {
-    let { children } = this.props;
+    let { items, amount } = this.props;
 
     return (
       <div>
-        <WishlistHeader />
+        <WishlistHeader amount={amount} />
+
+        <WishlistItems items={items} />
       </div>
     );
   }
 }
 
-export default connect(({ wishlist }) => {
-  return wishlist;
-})(Wishlist);
+export const ConnectedWishlist = connect(
+  ({ wishlist }) => wishlist,
+  (dispatch) => ({
+    onItemsReceive(items) { dispatch(wishlistItemsReceived(items)) },
+    controls: {
+      onToggle(evt) { dispatch(toggleWishlistItems(evt.target.checked)) }
+    },
+    dispatch
+  })
+)(Wishlist);
