@@ -21,6 +21,7 @@ module.exports = {
     new webpack.ProvidePlugin({
       'React': 'react',
       'R': 'ramda',
+      '___': './src/helpers/polyfills'
     }),
   ],
   module: {
