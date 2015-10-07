@@ -9,6 +9,8 @@
     # to run the app itself
     npm install
     npm start
+    
+    # then go to browser and open localhost:3000
   
 
 ### Thoughts
