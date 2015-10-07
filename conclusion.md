@@ -25,10 +25,13 @@ port it to ramda and then through the marathon was getting bugs from it).
 
 Another thought that I understood when I ended is that I need no wishlist or details reducer,
 because it turned out a bit of ugly to pass props from one container to other. I could just `connect()`
-wishlist to changes of `state.app.wishlist` and get data from there.
+wishlist to changes of `state.app.wishlist` and get data from there. The need of separate reducer arise
+only when you get data from somewhere (server or something), in my case I wanted to separate concerns
+of pages, but had a little luck with it.
 
 So let’s conclude: I was able to create main container, its actions and reducer in time.
 And wishlist container with part of actions (checking/deleting) and reducer (no need in it though).
+Wishlist has two working actions now (aside fetching data): check/uncheck items (one/all) and delete items (one/all)
 
 Oh, and styles are really, really ugly.
 
