@@ -3,18 +3,18 @@ export class WishlistControls extends React.Component {
     return (
       <div className="wishlist-controls">
         <label className="wishlist-label">
-          <input type="checkbox" /> Select All
+          <input type="checkbox" onChange={this.props.onToggle(null)} /> Select All
         </label>
 
-        <button className="wishlist-button">
-          Add selected basket button
+        <button className="wishlist-button" onClick={this.props.onAddToBasket}>
+          Add selected to basket
         </button>
 
-        <button className="wishlist-link">
+        <button className="wishlist-link" onClick={this.props.onRemove(null)}>
           Remove all items
         </button>
 
-        <button className="wishlist-button">
+        <button className="wishlist-button" onClick={this.props.emailWishlist}>
           Email wishlist
         </button>
       </div>
