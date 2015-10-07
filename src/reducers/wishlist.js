@@ -17,13 +17,9 @@ const actions = {
   }),
   [ TOGGLE_WISHLIST_ITEMS ]: (state, { toggle, sku }) => ({
     items: state.items.map((item) => {
-      if (sku) {
-        return (sku == item.data.sku) ?
-          R.assoc('isChecked', toggle, item) :
-          item;
-      } else {
-        return R.assoc('isChecked', toggle, item);
-      }
+      let remove = R.assoc('isChecked', toggle);
+
+      return !sku || sku == item.data.sku ? remove(item) : item;
     })
   }),
   [ REMOVE_WISHLIST_ITEMS ]: (state, { sku }) => ({
