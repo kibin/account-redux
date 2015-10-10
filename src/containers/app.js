@@ -20,12 +20,7 @@ export class App extends React.Component {
         <Sidebar />
 
         <div className="content">
-          {isFetching ?
-            loader :
-            children && React.cloneElement(children, {
-              data: this.props[childKey],
-              ...children.props
-            })}
+          {isFetching ? loader : children}
         </div>
       </div>
     );
@@ -33,10 +28,7 @@ export class App extends React.Component {
 }
 
 export const ConnectedApp = connect(
-  ({ app }) => ({
-    wishlist: app.wishlist,
-    details: app.details
-  }),
+  R.prop('app'),
   (dispatch) => ({
     fetchUser() { dispatch(fetchUser()) },
     dispatch

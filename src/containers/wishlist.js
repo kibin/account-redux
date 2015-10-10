@@ -8,12 +8,6 @@ import {
 } from '../actions';
 
 export class Wishlist extends React.Component {
-  componentWillReceiveProps(nextProps) {
-    let { data } = nextProps;
-
-    if (data && this.props.data != data) this.props.onItemsReceive(data.wishlistItems);
-  }
-
   render() {
     let { items, amount, controls } = this.props;
 
@@ -28,7 +22,7 @@ export class Wishlist extends React.Component {
 }
 
 export const ConnectedWishlist = connect(
-  ({ wishlist }) => wishlist,
+  R.path(['app', 'wishlist']),
   (dispatch) => ({
     onItemsReceive(items) { dispatch(wishlistItemsReceived(items)) },
     controls: {

@@ -1,6 +1,6 @@
-export function createReducer(actions, initialState = {}) {
+export function createReducer(reducers, initialState = {}) {
   return (state = initialState, action = {}) => {
-    const reducer = actions[action.type];
+    const reducer = reducers[action.type];
 
     if (!reducer) return state;
 

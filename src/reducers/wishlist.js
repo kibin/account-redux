@@ -1,20 +1,15 @@
 import { createReducer } from '../helpers';
 import {
-  WISHLIST_ITEMS_RECEIVED,
   TOGGLE_WISHLIST_ITEMS,
   REMOVE_WISHLIST_ITEMS
 } from '../actions';
 
-const initialState = {
+export const wishlistInitialState = {
   items: [],
   amount: 0
 };
 
-const actions = {
-  [ WISHLIST_ITEMS_RECEIVED ]: (state, { items }) => ({
-    items: items.map((item) => ({ isChecked: false, data: item })),
-    amount: items.length
-  }),
+export const wishlistReducers = {
   [ TOGGLE_WISHLIST_ITEMS ]: (state, { toggle, sku }) => ({
     items: state.items.map((item) => {
       let remove = R.assoc('isChecked', toggle);
@@ -28,5 +23,3 @@ const actions = {
       []
   })
 };
-
-export const wishlist = createReducer(actions, initialState);
