@@ -1,5 +1,16 @@
 import { ajax } from '../helpers'
 
+
+export const getItems = R.path(['wishlist', 'items'])
+export const skusFromItems = R.map(R.path(['data', 'sku']))
+export const getSkus = R.compose(skusFromItems, getItems)
+export const getChecked = R.compose(
+  skusFromItems,
+  R.filter(R.prop('isChecked')),
+  getItems
+)
+
+
 export const WISHLIST_ITEMS_RECEIVED = 'WISHLIST_ITEMS_RECEIVED'
 export function wishlistItemsReceived(items) {
   return {
@@ -7,6 +18,7 @@ export function wishlistItemsReceived(items) {
     items
   };
 }
+
 
 export const TOGGLE_WISHLIST_ITEMS = 'TOGGLE_WISHLIST_ITEMS'
 export function toggleWishlistItems(state, sku) {
@@ -16,6 +28,7 @@ export function toggleWishlistItems(state, sku) {
     sku
   };
 }
+
 
 export const REQUEST_REMOVE_ITEMS = 'REQUEST_REMOVE_ITEMS'
 export function requestRemoveItems() {
@@ -47,17 +60,91 @@ export function removeWishlistItems(sku) {
   return (dispatch, getState) => {
     dispatch(requestRemoveItems());
 
-    let skus = [].concat(sku || R.compose(
-      R.map(R.path(['data', 'sku'])),
-      R.path(['wishlist', 'items'])
-    )(getState()));
+    let skus = [].concat(sku || getSkus(getState()));
 
     ajax('/api/remove', { skus })
-      .then((response) => {
-        if (response.success) {
-          dispatch(requestRemoveItemsSuccess(skus));
-        }
+      .then(({ success, removed } = {}) => {
+        success && dispatch(requestRemoveItemsSuccess(removed));
       })
       .catch(R.compose(dispatch, requestRemoveItemsFail));
   };
+}
+
+
+export const REQUEST_ADD_TO_BASKET = 'REQUEST_ADD_TO_BASKET'
+export function requestAddToBasket() {
+  return {
+    type: REQUEST_ADD_TO_BASKET,
+    requestingAddToBasket: true
+  };
+}
+
+export const REQUEST_ADD_TO_BASKET_SUCCESS = 'REQUEST_ADD_TO_BASKET_SUCCESS'
+export function requestAddToBasketSuccess(skus) {
+  return {
+    type: REQUEST_ADD_TO_BASKET_SUCCESS,
+    requestingAddToBasket: false,
+    skus
+  };
+}
+
+export const REQUEST_ADD_TO_BASKET_FAIL = 'REQUEST_ADD_TO_BASKET_FAIL'
+export function requestAddToBasketFail(error) {
+  return {
+    type: REQUEST_ADD_TO_BASKET_FAIL,
+    requestingAddToBasket: false,
+    error
+  };
+}
+
+export function addWishlistItemsToBasket(sku) {
+  return (dispatch, getState) => {
+    dispatch(requestAddToBasket());
+
+    let skus = [].concat(sku || getChecked(getState()));
+
+    ajax('api/add_to_basket', { skus })
+      .then(({ success, added } = {}) => {
+        success && dispatch(requestAddToBasketSuccess(added));
+      })
+      .catch(R.compose(dispatch, requestAddToBasketFail));
+  };
+}
+
+
+export const EMAIL_WISHLIST_REQUEST = 'EMAIL_WISHLIST_REQUEST'
+export function emailWishlistRequest() {
+  return {
+    type: EMAIL_WISHLIST_REQUEST,
+    requestingEmail: true
+  };
+}
+
+export const EMAIL_WISHLIST_REQUEST_SUCCESS = 'EMAIL_WISHLIST_REQUEST_SUCCESS'
+export function emailWishlistRequestSuccess() {
+  return {
+    type: EMAIL_WISHLIST_REQUEST_SUCCESS,
+    requestingEmail: false
+  };
+}
+
+export const EMAIL_WISHLIST_REQUEST_FAIL = 'EMAIL_WISHLIST_REQUEST_FAIL'
+export function emailWishlistRequestFail(error) {
+  return {
+    type: EMAIL_WISHLIST_REQUEST_FAIL,
+    requestingEmail: false,
+    error
+  };
+}
+
+export function emailWishlist() {
+  return dispatch => {
+    dispatch(emailWishlistRequest());
+
+    ajax('api/email_wishlist')
+      .then(({ success } = {}) => {
+        success && dispatch(emailWishlistRequestSuccess());
+      })
+      .catch(R.compose(dispatch, emailWishlistRequestFail));
+  }
 }

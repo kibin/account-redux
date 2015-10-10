@@ -1,20 +1,22 @@
 export class WishlistControls extends React.Component {
   render() {
+    let { onToggle, onAddToBasket, onRemove, onEmailWishlist, allChecked } = this.props;
+
     return (
       <div className="wishlist-controls">
         <label className="wishlist-label">
-          <input type="checkbox" onChange={this.props.onToggle(null)} /> Select All
+          <input type="checkbox" checked={allChecked} onChange={onToggle()} /> Select All
         </label>
 
-        <button className="wishlist-button" onClick={this.props.onAddToBasket}>
+        <button className="wishlist-button" onClick={onAddToBasket()}>
           Add selected to basket
         </button>
 
-        <button className="wishlist-link" onClick={this.props.onRemove(null)}>
+        <button className="wishlist-link" onClick={onRemove()}>
           Remove all items
         </button>
 
-        <button className="wishlist-button" onClick={this.props.emailWishlist}>
+        <button className="wishlist-button" onClick={onEmailWishlist}>
           Email wishlist
         </button>
       </div>

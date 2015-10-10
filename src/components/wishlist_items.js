@@ -4,15 +4,18 @@ import './wishlist_items.styl';
 
 export class WishlistItems extends React.Component {
   render() {
-    let { items, controls } = this.props;
+    let { items, controls, allChecked } = this.props;
+    let wishlistControls = <WishlistControls {...{ ...controls, allChecked }} />;
 
     return (
       <div className="wishlist-items">
-        <WishlistControls {...controls} />
+        {wishlistControls}
 
-        {items.map((props, key) => <WishlistItem key={key} {...{ ...props, ...controls }} />)}
+        {items.map((props, key) =>
+          <WishlistItem key={key} {...{ ...props, ...controls }} />
+        )}
 
-        <WishlistControls {...controls} />
+        {wishlistControls}
       </div>
     );
   }

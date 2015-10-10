@@ -4,18 +4,18 @@ import { WishlistHeader, WishlistItems } from '../components';
 import {
   wishlistItemsReceived,
   toggleWishlistItems,
-  removeWishlistItems
+  removeWishlistItems,
+  addWishlistItemsToBasket,
+  emailWishlist
 } from '../actions';
 
 export class Wishlist extends React.Component {
   render() {
-    let { items, amount, controls } = this.props;
-
     return (
       <div>
-        <WishlistHeader amount={amount} />
+        <WishlistHeader amount={R.length(this.props.items)} />
 
-        <WishlistItems controls={controls} items={items} />
+        <WishlistItems {...R.pick(['items', 'controls', 'allChecked'], this.props)} />
       </div>
     );
   }
@@ -23,11 +23,12 @@ export class Wishlist extends React.Component {
 
 export const ConnectedWishlist = connect(
   R.prop('wishlist'),
-  (dispatch) => ({
-    onItemsReceive(items) { dispatch(wishlistItemsReceived(items)) },
+  dispatch => ({
     controls: {
-      onToggle: R.curry((sku, evt) => dispatch(toggleWishlistItems(evt.target.checked, sku))),
-      onRemove: (sku) => _ => dispatch(removeWishlistItems(sku))
+      onToggle: sku => evt => dispatch(toggleWishlistItems(evt.target.checked, sku)),
+      onRemove: sku => _ => dispatch(removeWishlistItems(sku)),
+      onAddToBasket: sku => _ => dispatch(addWishlistItemsToBasket(sku)),
+      onEmailWishlist: _ => dispatch(emailWishlist())
     },
     dispatch
   })
