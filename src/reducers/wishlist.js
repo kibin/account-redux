@@ -2,7 +2,9 @@ import { createReducer } from '../helpers';
 import {
   WISHLIST_ITEMS_RECEIVED,
   TOGGLE_WISHLIST_ITEMS,
-  REMOVE_WISHLIST_ITEMS
+  REQUEST_REMOVE_ITEMS,
+  REQUEST_REMOVE_ITEMS_SUCCESS,
+  REQUEST_REMOVE_ITEMS_FAIL
 } from '../actions';
 
 const initialState = {
@@ -22,10 +24,11 @@ const reducers = {
       return !sku || sku == item.data.sku ? remove(item) : item;
     })
   }),
-  [ REMOVE_WISHLIST_ITEMS ]: (state, { sku }) => ({
-    items: sku ?
-      R.reject((item) => item.data.sku == sku, state.items) :
-      []
+  [ REQUEST_REMOVE_ITEMS ]: (state, { requestRemove }) => ({ requestRemove }),
+  [ REQUEST_REMOVE_ITEMS_FAIL ]: (state, { requestRemove, error }) => ({ requestRemove, error }),
+  [ REQUEST_REMOVE_ITEMS_SUCCESS ]: (state, { sku, requestRemove }) => ({
+    items: sku ? R.reject((item) => item.data.sku == sku, state.items) : [],
+    requestRemove
   })
 };
 

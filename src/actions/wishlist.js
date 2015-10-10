@@ -1,3 +1,5 @@
+import { ajax } from '../helpers'
+
 export const WISHLIST_ITEMS_RECEIVED = 'WISHLIST_ITEMS_RECEIVED'
 export function wishlistItemsReceived(items) {
   return {
@@ -15,10 +17,47 @@ export function toggleWishlistItems(state, sku) {
   };
 }
 
-export const REMOVE_WISHLIST_ITEMS = 'REMOVE_WISHLIST_ITEMS'
-export function removeWishlistItems(sku) {
+export const REQUEST_REMOVE_ITEMS = 'REQUEST_REMOVE_ITEMS'
+export function requestRemoveItems() {
   return {
-    type: REMOVE_WISHLIST_ITEMS,
+    type: REQUEST_REMOVE_ITEMS,
+    requestRemove: true
+  };
+}
+
+export const REQUEST_REMOVE_ITEMS_SUCCESS = 'REQUEST_REMOVE_ITEMS_SUCCESS'
+export function requestRemoveItemsSuccess(sku) {
+  return {
+    type: REQUEST_REMOVE_ITEMS_SUCCESS,
+    requestRemove: false,
     sku
+  };
+}
+
+export const REQUEST_REMOVE_ITEMS_FAIL = 'REQUEST_REMOVE_ITEMS_FAIL'
+export function requestRemoveItemsFail(error) {
+  return {
+    type: REQUEST_REMOVE_ITEMS_FAIL,
+    requestRemove: false,
+    error
+  };
+}
+
+export function removeWishlistItems(sku) {
+  return (dispatch, getState) => {
+    dispatch(requestRemoveItems());
+
+    let skus = sku || R.compose(
+      R.map(R.path(['data', 'sku'])),
+      R.path(['wishlist', 'items'])
+    )(getState());
+
+    ajax('/api/remove', { skus: [].concat(skus) })
+      .then((response) => {
+        if (response.success) {
+          dispatch(requestRemoveItemsSuccess(sku));
+        }
+      })
+      .catch(R.compose(dispatch, requestRemoveItemsFail));
   };
 }
