@@ -28,6 +28,7 @@ because it turned out a bit of ugly to pass props from one container to other. I
 wishlist to changes of `state.app.wishlist` and get data from there. The need of separate reducer arise
 only when you get data from somewhere (server or something), in my case I wanted to separate concerns
 of pages, but had a little luck with it.
+**UPD:** actually, no, I was doing right, I just wrongly wired app actions. In curiosity I’m continuing this app development and newest versions are in the [“beyond” branch](https://github.com/kibin/debijenkorf/tree/beyond).
 
 So let’s conclude: I was able to create main container, its actions and reducer in time.
 And wishlist container with part of actions (checking/deleting) and reducer (no need in it though).
