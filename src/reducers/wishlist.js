@@ -26,8 +26,11 @@ const reducers = {
   }),
   [ REQUEST_REMOVE_ITEMS ]: (state, { requestRemove }) => ({ requestRemove }),
   [ REQUEST_REMOVE_ITEMS_FAIL ]: (state, { requestRemove, error }) => ({ requestRemove, error }),
-  [ REQUEST_REMOVE_ITEMS_SUCCESS ]: (state, { sku, requestRemove }) => ({
-    items: sku ? R.reject((item) => item.data.sku == sku, state.items) : [],
+  [ REQUEST_REMOVE_ITEMS_SUCCESS ]: (state, { skus, requestRemove }) => ({
+    items: R.reject(
+      R.compose(R.partialRight(R.contains, skus), R.path(['data', 'sku'])),
+      state.items
+    ),
     requestRemove
   })
 };

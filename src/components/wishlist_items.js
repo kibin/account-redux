@@ -10,7 +10,7 @@ export class WishlistItems extends React.Component {
       <div className="wishlist-items">
         <WishlistControls {...controls} />
 
-        {items.map((props) => <WishlistItem {...{ ...props, ...controls }} />)}
+        {items.map((props, key) => <WishlistItem key={key} {...{ ...props, ...controls }} />)}
 
         <WishlistControls {...controls} />
       </div>

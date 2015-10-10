@@ -26,11 +26,11 @@ export function requestRemoveItems() {
 }
 
 export const REQUEST_REMOVE_ITEMS_SUCCESS = 'REQUEST_REMOVE_ITEMS_SUCCESS'
-export function requestRemoveItemsSuccess(sku) {
+export function requestRemoveItemsSuccess(skus) {
   return {
     type: REQUEST_REMOVE_ITEMS_SUCCESS,
     requestRemove: false,
-    sku
+    skus
   };
 }
 
@@ -47,15 +47,15 @@ export function removeWishlistItems(sku) {
   return (dispatch, getState) => {
     dispatch(requestRemoveItems());
 
-    let skus = sku || R.compose(
+    let skus = [].concat(sku || R.compose(
       R.map(R.path(['data', 'sku'])),
       R.path(['wishlist', 'items'])
-    )(getState());
+    )(getState()));
 
-    ajax('/api/remove', { skus: [].concat(skus) })
+    ajax('/api/remove', { skus })
       .then((response) => {
         if (response.success) {
-          dispatch(requestRemoveItemsSuccess(sku));
+          dispatch(requestRemoveItemsSuccess(skus));
         }
       })
       .catch(R.compose(dispatch, requestRemoveItemsFail));
