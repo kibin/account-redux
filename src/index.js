@@ -16,6 +16,13 @@ const logger = createLogger();
 const state = combineReducers(reducers);
 const store = applyMiddleware(thunk, logger)(createStore)(state);
 
+if (module.hot) {
+  module.hot.accept('./reducers', () => {
+    const nextReducer = require('./reducers');
+    store.replaceReducer(nextRootReducer);
+  });
+}
+
 React.render(
   <Provider store={store}>
     {() =>
