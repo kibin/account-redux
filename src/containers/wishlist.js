@@ -22,7 +22,7 @@ export class Wishlist extends React.Component {
 }
 
 export const ConnectedWishlist = connect(
-  R.path(['app', 'wishlist']),
+  R.prop('wishlist'),
   (dispatch) => ({
     onItemsReceive(items) { dispatch(wishlistItemsReceived(items)) },
     controls: {

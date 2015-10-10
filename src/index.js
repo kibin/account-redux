@@ -5,7 +5,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 
-import { app } from './reducers';
+import * as reducers from './reducers';
 import { ConnectedApp, ConnectedWishlist, ConnectedDetails } from './containers';
 
 const history = createBrowserHistory();
@@ -13,7 +13,7 @@ const history = createBrowserHistory();
 // even in “production” so users can track
 // application flow in their consoles easier.
 const logger = createLogger();
-const state = combineReducers({ app });
+const state = combineReducers(reducers);
 const store = applyMiddleware(thunk, logger)(createStore)(state);
 
 React.render(
