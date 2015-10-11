@@ -3,6 +3,7 @@
 ## Redux:
 
 ### All:
+* Tests
 * Loaders
 * Styles
 * Build for site version
@@ -12,7 +13,7 @@
 * Loaders and styles
 
 ### Personal details:
-* Container
+* Container (also as index route)
 * View page (also index route)
 * Edit page
 * Reducers
