@@ -1,5 +1,5 @@
 import { ajax } from '../helpers'
-import { wishlistItemsReceived } from './wishlist'
+import { wishlistItemsReceived, detailsReceived } from './'
 
 export const FETCH_USER_REQUEST = 'FETCH_USER_REQUEST'
 export function fetchUserRequest() {
@@ -30,7 +30,8 @@ export function onFetchSuccess(data) {
   return (dispatch, getState) => {
     dispatch(fetchUserSuccess());
 
-    dispatch(wishlistItemsReceived(data.wishlistItems))
+    dispatch(wishlistItemsReceived(data.wishlistItems));
+    dispatch(detailsReceived(R.omit(['wishlistItems'], data)));
   }
 }
 
