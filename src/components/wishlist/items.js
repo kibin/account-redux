@@ -1,6 +1,6 @@
-import { WishlistControls, WishlistItem } from './';
+import { WishlistControls, WishlistItem } from '../';
 
-import './wishlist_items.styl';
+import './items.styl';
 
 export class WishlistItems extends React.Component {
   render() {
