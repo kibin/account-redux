@@ -47,4 +47,4 @@ const reducers = {
   [ EMAIL_WISHLIST_REQUEST_SUCCESS ]: (state, { requestingEmail }) => ({ requestingEmail })
 };
 
-export const wishlist = createReducer(reducers, initialState);
+export const wishlist = createReducer(reducers, initialState)

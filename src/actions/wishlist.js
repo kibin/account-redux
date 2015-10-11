@@ -10,7 +10,6 @@ export const getChecked = R.compose(
   getItems
 )
 
-
 export const WISHLIST_ITEMS_RECEIVED = 'WISHLIST_ITEMS_RECEIVED'
 export function wishlistItemsReceived(items) {
   return {
@@ -18,7 +17,6 @@ export function wishlistItemsReceived(items) {
     items
   };
 }
-
 
 export const TOGGLE_WISHLIST_ITEMS = 'TOGGLE_WISHLIST_ITEMS'
 export function toggleWishlistItems(state, sku) {
@@ -28,7 +26,6 @@ export function toggleWishlistItems(state, sku) {
     sku
   };
 }
-
 
 export const REQUEST_REMOVE_ITEMS = 'REQUEST_REMOVE_ITEMS'
 export function requestRemoveItems() {
@@ -70,7 +67,6 @@ export function removeWishlistItems(sku) {
   };
 }
 
-
 export const REQUEST_ADD_TO_BASKET = 'REQUEST_ADD_TO_BASKET'
 export function requestAddToBasket() {
   return {
@@ -110,7 +106,6 @@ export function addWishlistItemsToBasket(sku) {
       .catch(R.compose(dispatch, requestAddToBasketFail));
   };
 }
-
 
 export const EMAIL_WISHLIST_REQUEST = 'EMAIL_WISHLIST_REQUEST'
 export function emailWishlistRequest() {
