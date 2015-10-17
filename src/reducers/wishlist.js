@@ -35,7 +35,7 @@ const reducers = {
     (state, { requestingAddToBasket, error }) => ({ requestingAddToBasket, error }),
   [ REQUEST_REMOVE_ITEMS_SUCCESS ]: (state, { skus, requestingAddToBasket }) => ({
     items: R.reject(
-      R.compose(R.partialRight(R.contains, skus), R.path(['data', 'sku'])),
+      R.compose(R.partialRight(R.contains, [skus]), R.path(['data', 'sku'])),
       state.items
     ),
     requestingAddToBasket

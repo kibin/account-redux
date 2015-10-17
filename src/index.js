@@ -9,9 +9,6 @@ import * as reducers from './reducers'
 import routes from './routes'
 
 const history = createBrowserHistory();
-// For this app I will be logging everything
-// even in “production” so users can track
-// application flow in their consoles easier.
 const logger = createLogger();
 const state = combineReducers(reducers);
 const store = applyMiddleware(thunk, logger)(createStore)(state);
@@ -23,9 +20,9 @@ if (module.hot) {
   });
 }
 
-React.render(
+ReactDOM.render(
   <Provider store={store}>
-    {() => <Router history={history}>{routes}</Router>}
+    <Router history={history}>{routes}</Router>
   </Provider>,
   document.getElementById('content')
 );
