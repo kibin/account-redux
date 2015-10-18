@@ -6,12 +6,13 @@ import { DetailsHeader, DetailsView } from '../components'
 export class Details extends React.Component {
   render() {
     let { children, details } = this.props;
+    let child = children && React.cloneElement(children, { ...children.props, ...details });
 
     return (
       <div>
         <DetailsHeader />
 
-        {<DetailsView {...details} /> || children}
+        {child || <DetailsView {...details} />}
       </div>
     );
   }
