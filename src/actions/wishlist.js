@@ -55,13 +55,18 @@ export function requestRemoveItemsFail(error) {
 
 export function removeWishlistItems(sku) {
   return (dispatch, getState) => {
-    dispatch(requestRemoveItems());
-
     let skus = [].concat(sku || getSkus(getState()));
+
+    if (R.isEmpty(skus)) return;
+
+    dispatch(requestRemoveItems());
 
     ajax('/api/remove', { skus })
       .then(({ success, removed } = {}) => {
-        success && dispatch(requestRemoveItemsSuccess(removed));
+        if (!success) return;
+
+        dispatch(toggleWishlistItems(false));
+        dispatch(requestRemoveItemsSuccess(removed));
       })
       .catch(R.compose(dispatch, requestRemoveItemsFail));
   };
@@ -95,9 +100,11 @@ export function requestAddToBasketFail(error) {
 
 export function addWishlistItemsToBasket(sku) {
   return (dispatch, getState) => {
-    dispatch(requestAddToBasket());
-
     let skus = [].concat(sku || getChecked(getState()));
+
+    if (R.isEmpty(skus)) return;
+
+    dispatch(requestAddToBasket());
 
     ajax('api/add_to_basket', { skus })
       .then(({ success, added } = {}) => {
@@ -133,7 +140,9 @@ export function emailWishlistRequestFail(error) {
 }
 
 export function emailWishlist() {
-  return dispatch => {
+  return (dispatch, getState) => {
+    if (R.isEmpty(getSkus(getState()))) return;
+
     dispatch(emailWishlistRequest());
 
     ajax('api/email_wishlist')

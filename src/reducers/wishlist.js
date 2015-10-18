@@ -23,9 +23,10 @@ const reducers = {
 
       return !sku || sku == item.data.sku ? check(item) : item;
     });
+    let isChecked = R.ifElse(R.length, R.all(R.prop('isChecked')), R.always(toggle));
 
     return {
-      allChecked: items.every(R.prop('isChecked')),
+      allChecked: isChecked(items),
       items
     }
   },
