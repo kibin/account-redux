@@ -5,7 +5,8 @@ import { DetailsEdit } from './components'
 
 export default (
   <Route path="/" component={ConnectedApp}>
-    <Route path="wishlist" component={ConnectedWishlist} />
+    <IndexRoute component={ConnectedDetails} />
+    <Route path="wishlist" components={ConnectedWishlist} />
     <Route path="details" component={ConnectedDetails}>
       <Route path="edit" component={DetailsEdit} />
     </Route>

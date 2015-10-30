@@ -20,7 +20,7 @@ export class App extends React.Component {
         <Sidebar />
 
         <div className="content">
-          {isFetching ? loader : (children || <ConnectedDetails />)}
+          {isFetching ? loader : children}
         </div>
       </div>
     );
