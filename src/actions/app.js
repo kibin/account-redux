@@ -1,4 +1,5 @@
 import { ajax } from '../helpers'
+import { wishlistItemsReceived, detailsReceived } from './'
 
 export const FETCH_USER_REQUEST = 'FETCH_USER_REQUEST'
 export function fetchUserRequest() {
@@ -9,11 +10,10 @@ export function fetchUserRequest() {
 }
 
 export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS'
-export function fetchUserSuccess(data) {
+export function fetchUserSuccess() {
   return {
     type: FETCH_USER_SUCCESS,
     isFetching: false,
-    data
   };
 }
 
@@ -26,12 +26,21 @@ export function fetchUserFail(error) {
   };
 }
 
-export function fetchUser(username) {
+export function onFetchSuccess(data) {
   return (dispatch, getState) => {
+    dispatch(fetchUserSuccess());
+
+    dispatch(wishlistItemsReceived(data.wishlistItems));
+    dispatch(detailsReceived(R.omit(['wishlistItems'], data)));
+  }
+}
+
+export function fetchUser(username) {
+  return (dispatch) => {
     dispatch(fetchUserRequest());
 
     ajax('/api/user', { username })
-      .then(R.compose(dispatch, fetchUserSuccess))
+      .then(R.compose(dispatch, onFetchSuccess))
       .catch(R.compose(dispatch, fetchUserFail));
   };
 }

@@ -1,6 +1,6 @@
 export class WishlistItem extends React.Component {
   render() {
-    let { isChecked, data, onToggle, onRemove } = this.props;
+    let { isChecked, data, onToggle, onRemove, onAddToBasket } = this.props;
 
     return (
       <div className="wishlist-item" style={{ backgroundColor: isChecked ? '#aaa' : '#fff' }}>
@@ -19,14 +19,14 @@ export class WishlistItem extends React.Component {
         </div>
 
         <div className="wishlist-item-fulldesc">
-          <p>quantity: {data.qty}</p>
-          <p>colour: {data.color}</p>
-          <p>size: {data.size}</p>
+          <p>Aantal: {data.qty}</p>
+          <p>Kleur: {data.color}</p>
+          <p>Maat: {data.size}</p>
         </div>
 
         <div className="wishlist-item-controls">
           <b>{data.price}</b>
-          <button>Add to basket</button>
+          <button onClick={onAddToBasket(data.sku)}>Add to basket</button>
         </div>
       </div>
     );

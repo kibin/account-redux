@@ -3,18 +3,13 @@ import { FETCH_USER_REQUEST, FETCH_USER_SUCCESS, FETCH_USER_FAIL } from '../acti
 
 const initialState = {
   isFetching: false,
-  data: {},
-  error: null
+  error: null,
 };
 
-const actions = {
+const reducers = {
   [ FETCH_USER_REQUEST ]: (state, { isFetching }) => ({ isFetching }),
-  [ FETCH_USER_SUCCESS ]: (state, { isFetching, data }) => ({
-    isFetching,
-    wishlist: R.pick(['wishlistItems'], data),
-    details: R.omit(['wishlistItems'], data)
-  }),
-  [ FETCH_USER_FAIL ]: (state, { isFetching, error }) => ({ isFetching, error })
+  [ FETCH_USER_SUCCESS ]: (state, { isFetching }) => ({ isFetching }),
+  [ FETCH_USER_FAIL ]: (state, { isFetching, error }) => ({ isFetching, error }),
 };
 
-export const app = createReducer(actions, initialState);
+export const app = createReducer(reducers, initialState);

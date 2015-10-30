@@ -20,6 +20,7 @@ module.exports = {
     new webpack.NoErrorsPlugin(),
     new webpack.ProvidePlugin({
       'React': 'react',
+      'ReactDOM': 'react-dom',
       'R': 'ramda',
       '___': './src/helpers/polyfills'
     }),

@@ -1,9 +1,10 @@
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 
-import { Sidebar } from '../components';
-import { fetchUser } from '../actions';
+import { Sidebar } from '../components'
+import { fetchUser } from '../actions'
+import { ConnectedDetails } from './'
 
-import '../styles/common.styl';
+import '../styles/common.styl'
 
 export class App extends React.Component {
   componentDidMount() {
@@ -12,7 +13,6 @@ export class App extends React.Component {
 
   render() {
     let { children, isFetching } = this.props;
-    let childKey = this.props.location.pathname.slice(1);
     let loader = 'Loading...';
 
     return (
@@ -20,12 +20,7 @@ export class App extends React.Component {
         <Sidebar />
 
         <div className="content">
-          {isFetching ?
-            loader :
-            children && React.cloneElement(children, {
-              data: this.props[childKey],
-              ...children.props
-            })}
+          {isFetching ? loader : children}
         </div>
       </div>
     );
@@ -33,12 +28,9 @@ export class App extends React.Component {
 }
 
 export const ConnectedApp = connect(
-  ({ app }) => ({
-    wishlist: app.wishlist,
-    details: app.details
-  }),
+  R.prop('app'),
   (dispatch) => ({
     fetchUser() { dispatch(fetchUser()) },
     dispatch
   })
-)(App);
+)(App)

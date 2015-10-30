@@ -6,11 +6,11 @@ export class Sidebar extends React.Component {
   render() {
     return (
       <div className="sidebar">
-        <Link className="sidebar-link" to="/details">
+        <Link activeClassName="sidebar-link_active" className="sidebar-link" to="/details">
           Persoonlijke gegevens
         </Link>
 
-        <Link className="sidebar-link" to="/wishlist">
+        <Link activeClassName="sidebar-link_active" className="sidebar-link" to="/wishlist">
           Verlanglijst
         </Link>
       </div>

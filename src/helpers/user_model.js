@@ -54,7 +54,7 @@ export default {
       "image":"http://cdn.debijenkorf.nl/INTERSHOP/static/WFS/dbk-shop-Site/-/dbk-shop/nl_NL/product-images/045/080/10_0450801000985048_pro_mod_frt_01_1108_1528_1014747.jpg"
     },
     {
-      "sku":"203209001900020",
+      "sku":"203209001900021",
       "brand":"Antony Morato",
       "name":"Fijngebreid T-shirt met skull",
       "qty":"1",
