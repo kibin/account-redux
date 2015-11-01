@@ -1,55 +1,55 @@
-import { ajax } from '../helpers'
+import { ajax } from 'helpers'
 
 
-export const getItems = R.path(['wishlist', 'items'])
-export const skusFromItems = R.map(R.path(['data', 'sku']))
+export const getItems = R.path([`wishlist`, `items`])
+export const skusFromItems = R.map(R.path([`data`, `sku`]))
 export const getSkus = R.compose(skusFromItems, getItems)
 export const getChecked = R.compose(
   skusFromItems,
-  R.filter(R.prop('isChecked')),
-  getItems
+  R.filter(R.prop(`isChecked`)),
+  getItems,
 )
 
-export const WISHLIST_ITEMS_RECEIVED = 'WISHLIST_ITEMS_RECEIVED'
+export const WISHLIST_ITEMS_RECEIVED = `WISHLIST_ITEMS_RECEIVED`
 export function wishlistItemsReceived(items) {
   return {
     type: WISHLIST_ITEMS_RECEIVED,
-    items
+    items,
   };
 }
 
-export const TOGGLE_WISHLIST_ITEMS = 'TOGGLE_WISHLIST_ITEMS'
+export const TOGGLE_WISHLIST_ITEMS = `TOGGLE_WISHLIST_ITEMS`
 export function toggleWishlistItems(state, sku) {
   return {
     type: TOGGLE_WISHLIST_ITEMS,
     toggle: state,
-    sku
+    sku,
   };
 }
 
-export const REQUEST_REMOVE_ITEMS = 'REQUEST_REMOVE_ITEMS'
+export const REQUEST_REMOVE_ITEMS = `REQUEST_REMOVE_ITEMS`
 export function requestRemoveItems() {
   return {
     type: REQUEST_REMOVE_ITEMS,
-    requestRemove: true
+    requestRemove: true,
   };
 }
 
-export const REQUEST_REMOVE_ITEMS_SUCCESS = 'REQUEST_REMOVE_ITEMS_SUCCESS'
+export const REQUEST_REMOVE_ITEMS_SUCCESS = `REQUEST_REMOVE_ITEMS_SUCCESS`
 export function requestRemoveItemsSuccess(skus) {
   return {
     type: REQUEST_REMOVE_ITEMS_SUCCESS,
     requestRemove: false,
-    skus
+    skus,
   };
 }
 
-export const REQUEST_REMOVE_ITEMS_FAIL = 'REQUEST_REMOVE_ITEMS_FAIL'
+export const REQUEST_REMOVE_ITEMS_FAIL = `REQUEST_REMOVE_ITEMS_FAIL`
 export function requestRemoveItemsFail(error) {
   return {
     type: REQUEST_REMOVE_ITEMS_FAIL,
     requestRemove: false,
-    error
+    error,
   };
 }
 
@@ -61,7 +61,7 @@ export function removeWishlistItems(sku) {
 
     dispatch(requestRemoveItems());
 
-    ajax('/api/remove', { skus })
+    ajax(`/api/remove`, { skus })
       .then(({ success, removed } = {}) => {
         if (!success) return;
 
@@ -72,29 +72,29 @@ export function removeWishlistItems(sku) {
   };
 }
 
-export const REQUEST_ADD_TO_BASKET = 'REQUEST_ADD_TO_BASKET'
+export const REQUEST_ADD_TO_BASKET = `REQUEST_ADD_TO_BASKET`
 export function requestAddToBasket() {
   return {
     type: REQUEST_ADD_TO_BASKET,
-    requestingAddToBasket: true
+    requestingAddToBasket: true,
   };
 }
 
-export const REQUEST_ADD_TO_BASKET_SUCCESS = 'REQUEST_ADD_TO_BASKET_SUCCESS'
+export const REQUEST_ADD_TO_BASKET_SUCCESS = `REQUEST_ADD_TO_BASKET_SUCCESS`
 export function requestAddToBasketSuccess(skus) {
   return {
     type: REQUEST_ADD_TO_BASKET_SUCCESS,
     requestingAddToBasket: false,
-    skus
+    skus,
   };
 }
 
-export const REQUEST_ADD_TO_BASKET_FAIL = 'REQUEST_ADD_TO_BASKET_FAIL'
+export const REQUEST_ADD_TO_BASKET_FAIL = `REQUEST_ADD_TO_BASKET_FAIL`
 export function requestAddToBasketFail(error) {
   return {
     type: REQUEST_ADD_TO_BASKET_FAIL,
     requestingAddToBasket: false,
-    error
+    error,
   };
 }
 
@@ -106,7 +106,7 @@ export function addWishlistItemsToBasket(sku) {
 
     dispatch(requestAddToBasket());
 
-    ajax('api/add_to_basket', { skus })
+    ajax(`api/add_to_basket`, { skus })
       .then(({ success, added } = {}) => {
         success && dispatch(requestAddToBasketSuccess(added));
       })
@@ -114,28 +114,28 @@ export function addWishlistItemsToBasket(sku) {
   };
 }
 
-export const EMAIL_WISHLIST_REQUEST = 'EMAIL_WISHLIST_REQUEST'
+export const EMAIL_WISHLIST_REQUEST = `EMAIL_WISHLIST_REQUEST`
 export function emailWishlistRequest() {
   return {
     type: EMAIL_WISHLIST_REQUEST,
-    requestingEmail: true
+    requestingEmail: true,
   };
 }
 
-export const EMAIL_WISHLIST_REQUEST_SUCCESS = 'EMAIL_WISHLIST_REQUEST_SUCCESS'
+export const EMAIL_WISHLIST_REQUEST_SUCCESS = `EMAIL_WISHLIST_REQUEST_SUCCESS`
 export function emailWishlistRequestSuccess() {
   return {
     type: EMAIL_WISHLIST_REQUEST_SUCCESS,
-    requestingEmail: false
+    requestingEmail: false,
   };
 }
 
-export const EMAIL_WISHLIST_REQUEST_FAIL = 'EMAIL_WISHLIST_REQUEST_FAIL'
+export const EMAIL_WISHLIST_REQUEST_FAIL = `EMAIL_WISHLIST_REQUEST_FAIL`
 export function emailWishlistRequestFail(error) {
   return {
     type: EMAIL_WISHLIST_REQUEST_FAIL,
     requestingEmail: false,
-    error
+    error,
   };
 }
 
@@ -145,7 +145,7 @@ export function emailWishlist() {
 
     dispatch(emailWishlistRequest());
 
-    ajax('api/email_wishlist')
+    ajax(`api/email_wishlist`)
       .then(({ success } = {}) => {
         success && dispatch(emailWishlistRequestSuccess());
       })

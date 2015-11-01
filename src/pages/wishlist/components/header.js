@@ -3,7 +3,7 @@ export class WishlistHeader extends React.Component {
     let { amount } = this.props;
 
     return (
-      <div className="wishlist-header">
+      <div className='wishlist-header'>
         <h1>Verlanglijst</h1>
 
         <b>U heeft {amount} artikelen op uw verlanglijst staan.</b>

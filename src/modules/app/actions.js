@@ -1,15 +1,15 @@
-import { ajax } from '../helpers'
-import { wishlistItemsReceived, detailsReceived } from './'
+import { ajax } from 'helpers'
+import { wishlistItemsReceived, detailsReceived } from 'pages'
 
-export const FETCH_USER_REQUEST = 'FETCH_USER_REQUEST'
+export const FETCH_USER_REQUEST = `FETCH_USER_REQUEST`
 export function fetchUserRequest() {
   return {
     type: FETCH_USER_REQUEST,
-    isFetching: true
+    isFetching: true,
   };
 }
 
-export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS'
+export const FETCH_USER_SUCCESS = `FETCH_USER_SUCCESS`
 export function fetchUserSuccess() {
   return {
     type: FETCH_USER_SUCCESS,
@@ -17,12 +17,12 @@ export function fetchUserSuccess() {
   };
 }
 
-export const FETCH_USER_FAIL = 'FETCH_USER_FAIL'
+export const FETCH_USER_FAIL = `FETCH_USER_FAIL`
 export function fetchUserFail(error) {
   return {
     type: FETCH_USER_FAIL,
     isFetching: false,
-    error
+    error,
   };
 }
 
@@ -31,7 +31,7 @@ export function onFetchSuccess(data) {
     dispatch(fetchUserSuccess());
 
     dispatch(wishlistItemsReceived(data.wishlistItems));
-    dispatch(detailsReceived(R.omit(['wishlistItems'], data)));
+    dispatch(detailsReceived(R.omit([`wishlistItems`], data)));
   }
 }
 
@@ -39,7 +39,7 @@ export function fetchUser(username) {
   return (dispatch) => {
     dispatch(fetchUserRequest());
 
-    ajax('/api/user', { username })
+    ajax(`/api/user`, { username })
       .then(R.compose(dispatch, onFetchSuccess))
       .catch(R.compose(dispatch, fetchUserFail));
   };

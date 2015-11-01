@@ -6,10 +6,10 @@ export class WishlistItems extends React.Component {
   render() {
     let { items, controls, allChecked } = this.props;
     let wishlistControls = <WishlistControls {...{ ...controls, allChecked }} />;
-    let noItems = 'No items to show here.';
+    let noItems = `No items to show here.`;
 
     return (
-      <div className="wishlist-items">
+      <div className='wishlist-items'>
         {wishlistControls}
 
         {R.ifElse(

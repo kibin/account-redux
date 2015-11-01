@@ -14,8 +14,8 @@ const state = combineReducers(reducers);
 const store = applyMiddleware(thunk, logger)(createStore)(state);
 
 if (module.hot) {
-  module.hot.accept('./reducers', () => {
-    const nextReducer = require('./reducers');
+  module.hot.accept(`./reducers`, _ => {
+    const nextReducer = require(`./reducers`);
     store.replaceReducer(nextRootReducer);
   });
 }
@@ -24,5 +24,5 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>{routes}</Router>
   </Provider>,
-  document.getElementById('content')
+  document.getElementById(`content`)
 );

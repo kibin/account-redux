@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 
-// import { } from '../actions'
-import { DetailsHeader, DetailsView } from '../components'
+import { DetailsHeader, DetailsView } from './'
 
 export class Details extends React.Component {
   render() {
@@ -19,8 +18,8 @@ export class Details extends React.Component {
 }
 
 export const ConnectedDetails = connect(
-  R.prop('details'),
+  R.prop(`details`),
   dispatch => ({
-    dispatch
-  })
+    dispatch,
+  }),
 )(Details);

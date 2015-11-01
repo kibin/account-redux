@@ -1,10 +1,8 @@
 import { connect } from 'react-redux'
 
-import { Sidebar } from '../components'
-import { fetchUser } from '../actions'
-import { ConnectedDetails } from './'
+import { Sidebar, fetchUser, ConnectedDetails } from './'
 
-import '../styles/common.styl'
+import 'styles/common.styl'
 
 export class App extends React.Component {
   componentDidMount() {
@@ -13,13 +11,13 @@ export class App extends React.Component {
 
   render() {
     let { children, isFetching } = this.props;
-    let loader = 'Loading...';
+    let loader = `Loading...`;
 
     return (
       <div>
         <Sidebar />
 
-        <div className="content">
+        <div className='content'>
           {isFetching ? loader : children}
         </div>
       </div>
@@ -28,9 +26,9 @@ export class App extends React.Component {
 }
 
 export const ConnectedApp = connect(
-  R.prop('app'),
+  R.prop(`app`),
   (dispatch) => ({
+    dispatch,
     fetchUser() { dispatch(fetchUser()) },
-    dispatch
-  })
+  }),
 )(App)
